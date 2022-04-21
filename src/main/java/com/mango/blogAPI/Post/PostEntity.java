@@ -1,5 +1,6 @@
 package com.mango.blogAPI.Post;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,6 +38,7 @@ public class PostEntity {
     @Column(name = "postviews", nullable = false)
     private Integer postViews;
 
+    @JsonIgnore
     public boolean isValid() {
         return id != null && title != null && createBy != null && textBody != null && dateCreated != null
                 && postViews != null;

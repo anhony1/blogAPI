@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping(path = "api")
+@RequestMapping(path = "api/posts")
 public class PostController {
 
     private final PostService postService;
@@ -22,7 +22,6 @@ public class PostController {
     public PostController(PostService postService) {
         this.postService = postService;
     }
-
 
     @RequestMapping(path = "/allPosts")
     public ResponseEntity getBlogPost(){
@@ -36,16 +35,17 @@ public class PostController {
 
     }
 
-//    @PostMapping(path = "/createPost")
-//    public ResponseEntity createPost() {
-//        try {
-//            PostEntity post = postService.createPost();
-//            return new ResponseEntity(post, HttpStatus.OK);
-//        } catch (Exception e) {
-//            log.error("error", e);
-//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @RequestMapping(path = "/post/{postId}")
+    public ResponseEntity getPostById(@PathVariable Integer postId){
+        try{
+            Optional<PostEntity> post = postService.getPostById(postId);
+            return new ResponseEntity(post, HttpStatus.OK);
+        }catch (Exception e){
+            log.error("error", e);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @RequestMapping(value = "/createNewPost", method = RequestMethod.POST,
     consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -67,7 +67,6 @@ public class PostController {
         }
 
         return ResponseEntity.ok(result);
-
     }
 
 
